@@ -1,0 +1,529 @@
+/* Junior Project - Chess */
+/* Cayden Dysome */
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #000000;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #333;
+}
+
+/* Intro Screen */
+.intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  pointer-events: none;
+}
+
+.intro-screen.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.intro-screen.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.intro-content {
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Top row with images and title */
+.intro-content .d-flex {
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Intro title */
+.intro-title {
+  font-size: 100px;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: 5px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Intro subtitle */
+.intro-subtitle {
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  opacity: 1;
+  margin-top: 7px;
+}
+
+/* Intro startbutton */
+.start-button {
+  font-size: 35px;
+  font-weight: 100;
+  background: #000000;
+  color: white;
+  padding: 15px 40px;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  margin-top: 5px;
+}
+
+/* start button hover */
+.start-button:hover {
+  background: #555;
+  border-color: #777;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* when start button is clicked */
+.start-button:active {
+  transform: translateY(0);
+}
+
+/* Game Mode */
+.gameMode-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  pointer-events: none;
+}
+
+.gameMode-screen.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.gameMode-screen.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.gameMode-content {
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Top row with images and title */
+.gameMode-content .d-flex {
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Intro title */
+.gameMode-title {
+  font-size: 100px;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: 5px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Intro subtitle */
+.gameModeScreen-subtitle {
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  opacity: 1;
+  margin-top: 7px;
+  color:#ffffff;
+}
+
+/* Intro startbutton */
+.pvp-button {
+  font-size: 35px;
+  font-weight: 100;
+  background: #000000;
+  color: white;
+  padding: 15px 40px;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  margin-top: 5px;
+}
+
+/* start button hover */
+.pvp-button:hover {
+  background: #555;
+  border-color: #777;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* when start button is clicked */
+.pvp-button:active {
+  transform: translateY(0);
+}
+
+/* Main Game Container */
+#Home {
+  background: rgba(0, 0, 0, 0.98);
+  max-width: 1200px;
+  width: 100%;
+  padding: 30px;
+  border-radius: 12px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 4px solid #000000;
+}
+
+/* Chess Board */
+#board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  border: 2px solid #000000;
+}
+
+/* Board squares */
+.square {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.square.light {
+  background-color: #cfcfce;
+}
+
+.square.dark {
+  background-color: #757473;
+}
+
+.square:hover {
+  filter: brightness(1.15);
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+.square.selected {
+  background-color: #7b61ff;
+}
+
+/* UI Panels (Left (reset and undo), Right (current player), and Past Moves) */
+
+/* Shared Panel Styles */
+#leftUI, 
+#rightUI, 
+#pastMovesUI {
+  background: #000000;
+  border: 3px solid #000000;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Left UI: Main Controls */
+#leftUI {
+  gap: 15px;
+  min-height: 180px;
+}
+
+/* Right UI: Player Status */
+#rightUI {
+  min-height: 180px;
+}
+
+/* Past Moves: History Panel */
+#pastMovesMain {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 480px;
+}
+
+.past-moves-title {
+  font-size: 25px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 1;
+  color: #ffffff;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#pastMovesUI {
+  height: 100%;
+  gap: 15px;
+  padding: 20px;
+  border: 3px solid #000000;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Move Log Area (Populated by JS) */
+#pastMovesUI .move-log {
+  flex-grow: 1;
+  background: #111;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  padding: 15px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  font-size: 18px;
+  text-align: left;
+}
+
+/* Buttons (Universal) */
+#leftUI button {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 25px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  background: #000000;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#leftUI button:hover {
+  background: #4b4a49;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#leftUI button:active{
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Current Player Display --- */
+.current-player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #000000;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: 2px solid #000000;
+  height: 100%;
+}
+
+.player-label {
+  font-size: 25px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 1;
+}
+
+.player-value {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  min-height: 50px;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 1024px) {
+  #Home {
+    max-width: 100%;
+  }
+
+  #board {
+    max-width: 500px;
+  }
+
+  .square {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-title {
+    font-size: 60px;
+  }
+
+  .intro-subtitle {
+    font-size: 1rem;
+  }
+
+  .start-button {
+    font-size: 24px;
+    padding: 12px 30px;
+    letter-spacing: 10px;
+  }
+
+  #Home {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  #board {
+    max-width: 100%;
+  }
+
+  .square {
+    font-size: 2rem;
+  }
+
+  #leftUI, 
+  #rightUI,
+  #pastMovesUI {
+    min-height: 140px;
+    padding: 15px;
+  }
+
+  #leftUI button,
+  #pastMovesUI button {
+    font-size: 16px;
+    padding: 12px;
+    letter-spacing: 1px;
+  }
+
+  .past-moves-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  #pastMovesUI .move-log {
+    font-size: 14px;
+    max-height: 150px;
+    padding: 10px;
+  }
+
+  .player-label {
+    font-size: 18px;
+  }
+
+  .player-value {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 576px) {
+  .intro-title {
+    font-size: 48px;
+  }
+
+  .intro-content .d-flex {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .intro-content .d-flex img {
+    max-width: 60px;
+  }
+
+  .start-button {
+    font-size: 18px;
+    padding: 10px 20px;
+    letter-spacing: 8px;
+  }
+
+  #Home {
+    padding: 15px;
+  }
+
+  #board {
+    max-width: 100%;
+  }
+
+  .square {
+    font-size: 1.5rem;
+  }
+
+  #leftUI button,
+  #pastMovesUI button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .past-moves-title {
+    font-size: 16px;
+  }
+
+  #pastMovesUI .move-log {
+    font-size: 12px;
+    max-height: 120px;
+  }
+
+  .player-value {
+    font-size: 20px;
+  }
+}
