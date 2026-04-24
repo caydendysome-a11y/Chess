@@ -60,18 +60,18 @@ const STARTING_BOARD = [
 
 // Map piece codes to image file paths
 const PIECE_IMAGES = {
-    'wK': 'wK.png', // White King
-    'wQ': 'wQ.png', // White Queen
-    'wR': 'wR.png', // White Rook
-    'wB': 'wB.png', // White Bishop
-    'wN': 'wN.png', // White Knight
-    'wP': 'wP.png', // White Pawn
-    'bK': 'bK.png', // Black King
-    'bQ': 'bQ.png', // Black Queen
-    'bR': 'bR.png', // Black Rook
-    'bB': 'bB.png', // Black Bishop
-    'bN': 'bN.png', // Black Knight
-    'bP': 'bP.png', // Black Pawn
+    'wK': 'images/wK.png', // White King
+    'wQ': 'images/wQ.png', // White Queen
+    'wR': 'images/wR.png', // White Rook
+    'wB': 'images/wB.png', // White Bishop
+    'wN': 'images/wN.png', // White Knight
+    'wP': 'images/wP.png', // White Pawn
+    'bK': 'images/bK.png', // Black King
+    'bQ': 'images/bQ.png', // Black Queen
+    'bR': 'images/bR.png', // Black Rook
+    'bB': 'images/bB.png', // Black Bishop
+    'bN': 'images/bN.png', // Black Knight
+    'bP': 'images/bP.png', // Black Pawn
 };
 
 // Board square colors
